@@ -5,9 +5,11 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: "Nunito";
+    outline: 0;
   }
   body {
-   background: #e3e3e3;
+   background: #fff;
    overflow-y: hidden;
   }
   h2{
@@ -20,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 }
 `
 
-export const primary = "#3C506F"
-export const textColor = "#e3e3e3"
+export const primary = "#F4F7FC"
+export const textColor = "#2E3B52"
 
 export default GlobalStyle

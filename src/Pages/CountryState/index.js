@@ -6,19 +6,24 @@ import {
   Container,
   TableContainer,
   ChartContainer,
-  CountryChartContainer
+  CountryChartContainer,
+  Title,
+  FindCountry,
+  LoadingContainer
 } from "./style";
 import CountryGraphic from "../../components/CountryGraphic";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { pt } from "date-fns/locale";
 import { BarLoader } from "react-spinners";
 export default function CountryState() {
   const [columnNames, setColumnNames] = useState(null);
+  const [allColumnData, setAllColumnData] = useState(null);
   const [columnData, setColumnData] = useState(null);
   const [totalInfected, setTotalInfected] = useState(null);
   const [totalHealed, setTotalHealed] = useState(null);
   const [currentCountry, setCurrentCountry] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchedCountry, setSearchedCountry] = useState(null);
   useEffect(() => {
     async function getCountryHistory(country) {
       setIsLoading(true);
@@ -73,14 +78,13 @@ export default function CountryState() {
           .filter((columName, index) => !ignoresColumns.includes(index))
           .map(column => columnNames[column])
       );
-
-      setColumnData(
-        data.countries_stat.map(eachColumn =>
-          Object.values(eachColumn).filter(
-            (column, index) => !ignoresColumns.includes(index)
-          )
+      let importantColumns = data.countries_stat.map(eachColumn =>
+        Object.values(eachColumn).filter(
+          (column, index) => !ignoresColumns.includes(index)
         )
       );
+      setAllColumnData(importantColumns);
+      setColumnData(importantColumns);
     }
     getData();
   }, []);
@@ -100,56 +104,96 @@ export default function CountryState() {
         );
       }
     });
-    setColumnData([...valuesOrdered]);
+    setAllColumnData([...valuesOrdered]);
   }
 
+  function searchCountry() {
+    if (searchedCountry) {
+      let foundedCountry = allColumnData.filter(country =>
+        new RegExp(`${searchedCountry}`, "gi").test(country[0])
+      );
+      console.log(foundedCountry);
+      setColumnData(foundedCountry);
+    } else {
+      setColumnData(allColumnData);
+    }
+  }
   return (
-    <Container>
-      {!columnData ? (
-        <BarLoader />
-      ) : (
-        <>
-          <TableContainer>
-            <Table
-              header={columnNames}
-              rows={columnData}
-              setCurrentCountry={setCurrentCountry}
-              orderedBy={orderBy}
-              totalPerPage={10}
-              width="100%"
-            />
-          </TableContainer>
-          {!totalInfected ? (
-            (currentCountry || isLoading) && <BarLoader />
-          ) : (
-            <CountryChartContainer>
-              <h1>{currentCountry}</h1>
+    <>
+      <Container>
+        {!columnData ? (
+          <LoadingContainer>
+            <BarLoader />
+          </LoadingContainer>
+        ) : (
+          <>
+            <div>
+              <FindCountry>
+                <input
+                  onChange={e => setSearchedCountry(e.target.value)}
+                  placeholder="Digite o nome do país"
+                  onKeyPress={e => {
+                    if (e.charCode === 13) searchCountry(e.target.value);
+                  }}
+                ></input>
+                <button onClick={() => searchCountry(searchedCountry)}>
+                  Pesquisar País
+                </button>
+              </FindCountry>
+              <TableContainer>
+                <Table
+                  header={columnNames}
+                  rows={columnData}
+                  setCurrentCountry={setCurrentCountry}
+                  orderedBy={orderBy}
+                  totalPerPage={10}
+                  width="100%"
+                />
+              </TableContainer>
+            </div>
+            {!totalInfected ? (
+              !currentCountry ? (
+                <h2 style={{ marginTop: "20px" }}>
+                  Selecione um país para ver o monitoramento.
+                </h2>
+              ) : (
+                isLoading &&
+                currentCountry && (
+                  <span style={{ marginTop: "20px" }}>
+                    <BarLoader />
+                  </span>
+                )
+              )
+            ) : (
+              <CountryChartContainer>
+                <h2>Histórico {currentCountry}</h2>
 
-              <div>
-                <ChartContainer area="infect">
-                  <h2>Total de infectados</h2>
+                <div>
+                  <ChartContainer area="infect">
+                    <h2>Total de infectados</h2>
 
-                  <CountryGraphic
-                    data={totalInfected}
-                    lineColor="red"
-                    dataKey="Infectados"
-                    dataKeyX="Data"
-                  />
-                </ChartContainer>
-                <ChartContainer area="healed">
-                  <h2>Total de curados</h2>
-                  <CountryGraphic
-                    data={totalHealed}
-                    lineColor="green"
-                    dataKey="Curados"
-                    dataKeyX="Data"
-                  />
-                </ChartContainer>
-              </div>
-            </CountryChartContainer>
-          )}
-        </>
-      )}
-    </Container>
+                    <CountryGraphic
+                      data={totalInfected}
+                      lineColor="#CCDAF1"
+                      dataKey="Infectados"
+                      dataKeyX="Data"
+                    />
+                  </ChartContainer>
+                  <ChartContainer area="healed">
+                    <h2>Total de curados</h2>
+                    <CountryGraphic
+                      data={totalHealed}
+                      lineColor="yellow"
+                      dataKey="Curados"
+                      dataKeyX="Data"
+                    />
+                  </ChartContainer>
+                </div>
+              </CountryChartContainer>
+            )}
+          </>
+        )}
+      </Container>
+    </>
   );
 }
