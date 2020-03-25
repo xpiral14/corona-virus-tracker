@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../components/Table";
-import axios from "axios";
 import config from "../../config";
 import {
   Container,
   TableContainer,
-  ChartContainer,
   CountryChartContainer,
-  Title,
   FindCountry,
   LoadingContainer
 } from "./style";
-import CountryGraphic from "../../components/CountryGraphic";
-import { format, set } from "date-fns";
-import { pt } from "date-fns/locale";
 import { BarLoader } from "react-spinners";
 import Charts from "./components/Charts";
 import api from "../../config/api";
@@ -21,9 +15,7 @@ export default function CountryState() {
   const [columnNames, setColumnNames] = useState(null);
   const [allColumnData, setAllColumnData] = useState(null);
   const [columnData, setColumnData] = useState(null);
-  const [countryData, setCountryData] = useState(null);
   const [currentCountry, setCurrentCountry] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchedCountry, setSearchedCountry] = useState(null);
 
   useEffect(() => {
@@ -39,7 +31,6 @@ export default function CountryState() {
       };
       let response = await api.get(config.urls.casesByCountry);
       let { data } = response;
-      setCountryData(data.countries_stat);
       setColumnNames(
         Object.keys(data.countries_stat[0])
           .filter((columName, index) => !ignoresColumns.includes(index))

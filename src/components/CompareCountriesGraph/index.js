@@ -2,9 +2,7 @@ import React from "react";
 import {
   XAxis,
   YAxis,
-  Area,
   Tooltip,
-  AreaChart,
   LineChart,
   Legend,
   Line,
@@ -13,39 +11,6 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-function generateRandomHexaColor() {
-  let possibleCharacteres = [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9"
-  ];
-  let hexaColor = "";
-  for (let i = 0; i < 6; i++) {
-    hexaColor += possibleCharacteres[Math.floor(Math.random() * 6) + 1];
-  }
-  return "#" + hexaColor;
-}
-
-// let countries = [
-//   {"id": 1, "Total de casos": 122, "Data": "17 de março"},
-//   {"id": 2,"Total de casos": 123, "Data": "17 de março"},
-//   {"id": 3,"Total de casos": 124, "Data": "18 de março"},
-//   {"id": 4,"Total de casos": 125, "Data": "19 de março"},
-//   {"id": 5,"Total de casos": 126, "Data": "19 de março"},
-//   {"id": 6,"Total de casos": 127, "Data": "19 de março"},
-// ]
 
 let colors = [
   '#D81387',

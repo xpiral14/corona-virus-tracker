@@ -8,11 +8,9 @@ import {
   Presentation,
   GraphContainer
 } from "./style";
-import axios from "axios";
 import api from "../../../../config/api";
 import config from "../../../../config";
 import { BarLoader } from "react-spinners";
-import PieChart from "../../../../components/PieChart";
 import toNumber from "../../../../utils/toNumber";
 import percent from "../../../../utils/percent";
 import { format } from "date-fns/esm";
@@ -21,8 +19,6 @@ import { pt } from "date-fns/esm/locale";
 import CountryGraphic from "../../../../components/CountryGraphic";
 
 export default function Charts({ countryName }) {
-  const [lastCountryState, setLastCountryState] = useState(null);
-  const [worldState, setWorldState] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [overviewInfo, setOverviewInfo] = useState(null);
   const [countryHistory, setCountryHistory] = useState(null);

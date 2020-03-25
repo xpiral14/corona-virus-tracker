@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  XAxis,
-  YAxis,
-  Area,
-  Tooltip,
-  AreaChart,
-  LineChart,
-  Legend,
-  Line,
-  ResponsiveContainer
-} from "recharts";
+import {Area, Tooltip, AreaChart, ResponsiveContainer } from "recharts";
 
 export default function CountryGraphic({ data, lineColor, dataKey, dataKeyX }) {
- 
-  const xAndYColor = "#212121";
   return (
     <ResponsiveContainer width="100%" height={250}>
       <AreaChart

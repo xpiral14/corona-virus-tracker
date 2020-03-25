@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { primary, textColor } from "../../globalStyle";
+import { textColor } from "../../globalStyle";
 export const CountrySelectContainer = styled.div``;
 
 export const ChartContainer = styled.div``;

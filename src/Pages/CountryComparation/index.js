@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   Container,
   CountrySelectContainer,
@@ -35,7 +35,6 @@ function formatDataToGraph(countries, countryToInsert) {
   const [countries, setCountries] = useState(null);
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [countryHistories, setCountryHistories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   function searchCountry(countryName) {
     let countrySearched = allCountries.filter(country =>

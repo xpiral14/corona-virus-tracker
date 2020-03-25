@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { darken } from "polished";
-import { primary, textColor } from "../../globalStyle";
+import { textColor } from "../../globalStyle";
 
 export const Container = styled.div`
   display: grid;

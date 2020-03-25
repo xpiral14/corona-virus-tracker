@@ -3,7 +3,7 @@ import GlobalStyle from "./globalStyle";
 import CountryState from "./Pages/CountryState";
 import Title from "./components/Title";
 import Menu from "./components/Menu";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CountryComparation from "./Pages/CountryComparation";
 
 function App() {
