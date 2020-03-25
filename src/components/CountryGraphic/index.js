@@ -1,26 +1,26 @@
 import React from "react";
 import {Area, Tooltip, AreaChart, ResponsiveContainer } from "recharts";
 
-export default function CountryGraphic({ data, lineColor, dataKey, dataKeyX }) {
+export default function CountryGraphic({ data, lineColor, dataKey, dataKeyX, width, height }) {
   return (
-    <ResponsiveContainer width="100%" height={250}>
+    <ResponsiveContainer width={width} height={height}>
       <AreaChart
         data={data}
-        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
       >
         <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={`color${dataKey.replace(/ /g, '')}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={lineColor} stopOpacity={0.8} />
-            <stop offset="95%" stopColor={lineColor} stopOpacity={0} />
+            <stop offset="100%" stopColor={lineColor} stopOpacity={0.1} />
           </linearGradient>
         </defs>
-        <Tooltip contentStyle={{ stroke: "#212121" }} />
+        {/* <Tooltip contentStyle={{ stroke: "#212121" }} /> */}
         <Area
           type="monotone"
           dataKey={dataKey}
           stroke={lineColor}
           fillOpacity={1}
-          fill="url(#colorUv)"
+          fill={`url(#color${dataKey.replace(/ /g, '')})`}
         />
       </AreaChart>
     </ResponsiveContainer>
