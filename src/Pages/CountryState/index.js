@@ -6,7 +6,8 @@ import {
   TableContainer,
   CountryChartContainer,
   FindCountry,
-  LoadingContainer
+  LoadingContainer,
+  ChartBox
 } from "./style";
 import { BarLoader } from "react-spinners";
 import Charts from "./components/Charts";
