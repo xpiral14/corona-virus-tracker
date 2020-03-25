@@ -1,3 +1,3 @@
 export default function toNumber(stringNumber) {
-  return Number.parseFloat(stringNumber.replace(",", ""));
+  return stringNumber ? Number.parseFloat(stringNumber.replace(",", "")) : 0;
 }
