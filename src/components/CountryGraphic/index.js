@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 export default function CountryGraphic({ data, lineColor, dataKey, dataKeyX }) {
-  console.log(lineColor)
+ 
   const xAndYColor = "#212121";
   return (
     <ResponsiveContainer width="100%" height={250}>
@@ -26,8 +26,6 @@ export default function CountryGraphic({ data, lineColor, dataKey, dataKeyX }) {
             <stop offset="95%" stopColor={lineColor} stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey={dataKeyX} stroke={xAndYColor} />
-        <YAxis stroke={xAndYColor} />
         <Tooltip contentStyle={{ stroke: "#212121" }} />
         <Area
           type="monotone"

@@ -11,7 +11,8 @@ const config = {
     casesByCountry: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php`,
     latestStateByCountry: country =>
       `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country=${country}`,
-    worldTotalState: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php`
+    worldTotalState:
+      "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php"
   }
 };
 

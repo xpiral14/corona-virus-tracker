@@ -12,10 +12,6 @@ export const Container = styled.div`
 export const CountryChartContainer = styled.div`
   padding: 0 20px;
   margin-top: 20px;
-  & > div {
-    display: flex;
-    justify-content: space-between;
-  }
 `;
 
 export const LoadingContainer = styled.div`
