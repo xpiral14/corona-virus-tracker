@@ -77,3 +77,8 @@ export const FindCountry = styled.div`
     }
   }
 `;
+export const ChartBox = styled.div`
+  display: flex;
+  flex: 1;
+
+`
