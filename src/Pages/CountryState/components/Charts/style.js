@@ -40,7 +40,7 @@ export const PercentBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: 4px solid ${primary};
+  border: 2px solid ${p => p.bg};
   text-align: center;
 `;
 
@@ -53,6 +53,36 @@ export const Percent = styled.span`
 
 export const PercentText = styled.p``;
 
-export const GraphContainer = styled.div``;
+export const GraphContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
 
-export const GraphBox = styled.div``
+export const GraphBox = styled.div`
+  margin-top: 20px;
+  display: flex;
+  position: relative;
+  flex-direction: column-reverse;
+  width: 30%;
+  height: 100px;
+  /* box-shadow: 0 5px 7px #21212110; */
+`;
+
+export const Title = styled.div`
+  z-index: 99;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  top: 20px;
+  h4 {
+    font-size: 14px;
+  }
+  span {
+    font-size: 16px;
+  }
+`;
