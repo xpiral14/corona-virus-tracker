@@ -5,37 +5,23 @@ import {
   ChartContainer,
   Countries,
   Country,
-  SearchCountry
+  SearchCountry,
+  LoadingContainer
 } from "./style";
 import { useEffect } from "react";
-import axios from "axios";
 import { BarLoader } from "react-spinners";
 import config from "../../config";
 import CompareCountriesGraph from "../../components/CompareCountriesGraph";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
+import api from "../../config/api";
 
-function formatDataToGraph(countries, countryToInsert) {
-  let finalObjectArray = [];
-  for (let i = 0; i < countries.length; i++) {
-    let countryName = Object.keys(countryToInsert[i])[1];
-    finalObjectArray = [
-      ...finalObjectArray,
-      {
-        ...countries[i],
-        [countryName]: countryToInsert[i][countryName]
-      }
-    ];
-  }
-  return finalObjectArray;
-}
-
-  export default function CountryComparation() {
+export default function CountryComparation() {
   const [allCountries, setAllCountries] = useState(null);
   const [countries, setCountries] = useState(null);
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [countryHistories, setCountryHistories] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   function searchCountry(countryName) {
     let countrySearched = allCountries.filter(country =>
       new RegExp(countryName, "ig").test(country)
@@ -44,66 +30,100 @@ function formatDataToGraph(countries, countryToInsert) {
     setCountries(countrySearched);
   }
   async function addInSelectedCountries(country) {
-    let existsCountryInState = selectedCountries.find(countryName => countryName === country);
+    if (isLoading) return;
+    let existsCountryInState = selectedCountries.find(
+      countryName => countryName === country
+    );
     if (existsCountryInState) {
-      setSelectedCountries(selectedCountries.filter(countryName => countryName !== existsCountryInState))
-      return
-    };
-
-    if(selectedCountries.length > 4) {
-      alert("Você já selecionou 5 países!")
+      setSelectedCountries(
+        selectedCountries.filter(
+          countryName => countryName !== existsCountryInState
+        )
+      );
       return;
     }
-    
-    setSelectedCountries(selectedCountries.concat(country));
-    await getSeletedCountriesHistory(country);
-  }
 
+    setIsLoading(true);
+
+    setSelectedCountries(selectedCountries.concat(country));
+
+    setIsLoading(false);
+  }
+  // busca o nome dos países infectados.
   useEffect(() => {
     async function getData() {
-      const response = await axios.get(config.urls.affectedCountries, {
-        headers: {
-          "X-RapidAPI-Host": config.rapidApi.apiHost,
-          "X-RapidAPI-Key": config.rapidApi.apiKey
-        }
-      });
-
-      setAllCountries(response.data.affected_countries);
-      setCountries(response.data.affected_countries);
+      const response = await api.get(config.urls.affectedCountries);
+      let { affected_countries: affectedCountries } = response.data;
+      setAllCountries(affectedCountries);
+      setCountries(affectedCountries);
     }
+    setIsLoading(true);
     getData();
+    setIsLoading(false);
   }, []);
 
-  async function getSeletedCountriesHistory(country) {
-    let response = await axios.get(
-      config.urls.historyByParticularCountry(country),
-      {
-        headers: {
-          "X-RapidAPI-Host": config.rapidApi.apiHost,
-          "X-RapidAPI-Key": config.rapidApi.apiKey
+  useEffect(() => {
+    async function getSeletedCountriesHistory() {
+      setIsLoading(true);
+      function getCountryHistory(countryName) {
+        return api.get(config.urls.historyByParticularCountry(countryName));
+      }
+      const getCountryHistouryAsAsync = async countryName => {
+        return getCountryHistory(countryName);
+      };
+
+      const getData = async () => {
+        return Promise.all(
+          selectedCountries.map(countryName =>
+            getCountryHistouryAsAsync(countryName)
+          )
+        );
+      };
+
+      let countryHistories = (await getData()).map(res =>
+        res.data.stat_by_country.map(data => {
+          return {
+            Data: format(new Date(data.record_date), "dd 'de' MMMM '/' hh:mm", {
+              locale: pt
+            }),
+            [data.country_name]: Number.parseInt(
+              data.total_cases.replace(",", "")
+            )
+          };
+        })
+      );
+      let firstCountryHistory = countryHistories[0];
+      let countryName;
+
+      // para cada história de um país encontrado, prepara os dados de maneira que a biblioteca de gráficos entenda.
+      for (let i = 1; i < countryHistories.length; i++) {
+        // para cada objeto de uma parte de uma história, adiciona o valor de "Total de casos" em um atributo com o nome do país.
+        for (let j = 0; j < firstCountryHistory.length; j++) {
+          // pega o nome do país do objeto atual.
+          countryName = Object.keys(countryHistories[i][j])[1];
+          firstCountryHistory[j] = {
+            ...firstCountryHistory[j],
+            [countryName]: countryHistories[i][j][countryName]
+          };
         }
       }
-    );
-    let importantData = response.data.stat_by_country.map(data => {
-      return {
-        Data: format(new Date(data.record_date), "dd 'de' MMMM '/' hh:mm", {
-          locale: pt
-        }),
-        [country]: Number.parseInt(data.total_cases.replace(",", ""))
-      };
-    });
-    let countriesFormated = !!countryHistories.length
-      ? formatDataToGraph(countryHistories, importantData)
-      : importantData;
-    setCountryHistories([...countriesFormated]);
-  }
+
+      setCountryHistories(firstCountryHistory);
+      setIsLoading(false);
+    }
+    if (selectedCountries.length) getSeletedCountriesHistory();
+    else setCountryHistories([]);
+  }, [selectedCountries]);
+
   return (
     <Container>
-      <CountrySelectContainer>
-        {!countries ? (
+      {!countries ? (
+        <LoadingContainer>
           <BarLoader />
-        ) : (
-          <>
+        </LoadingContainer>
+      ) : (
+        <>
+          <CountrySelectContainer>
             <SearchCountry>
               <input
                 placeholder="Digite o nome do país"
@@ -114,26 +134,29 @@ function formatDataToGraph(countries, countryToInsert) {
               {countries.map(country => (
                 <Country
                   key={country}
-                  active = {selectedCountries.includes(country)}
+                  active={selectedCountries.includes(country)}
                   onClick={() => addInSelectedCountries(country)}
                 >
                   {country}
                 </Country>
               ))}
             </Countries>
-          </>
-        )}
-      </CountrySelectContainer>
-      <ChartContainer>
-        {!countryHistories.length ? (
-          <h2>Selecione os países que deseja comparar</h2>
-        ) : (
-          <>
-          <h2>Selecione até 5 países</h2>
-          <CompareCountriesGraph countries={countryHistories} />
-          </>
-        )}
-      </ChartContainer>
+          </CountrySelectContainer>
+          <ChartContainer>
+            {!countryHistories.length ? (
+              isLoading ? (
+                <BarLoader />
+              ) : (
+                <h2>Selecione os países que deseja comparar</h2>
+              )
+            ) : isLoading ? (
+              <BarLoader />
+            ) : (
+              <CompareCountriesGraph countries={countryHistories} />
+            )}
+          </ChartContainer>
+        </>
+      )}
     </Container>
   );
 }

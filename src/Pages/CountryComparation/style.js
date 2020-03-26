@@ -50,3 +50,10 @@ export const Country = styled.button`
   font-weight: bold;
   border-radius: 5px;
 `;
+
+export const LoadingContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
