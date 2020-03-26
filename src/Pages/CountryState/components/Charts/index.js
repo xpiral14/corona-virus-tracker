@@ -19,7 +19,6 @@ import { format } from "date-fns/esm";
 import { useMemo } from "react";
 import { pt } from "date-fns/esm/locale";
 import CountryGraphic from "../../../../components/CountryGraphic";
-import { textColor, primary } from "../../../../globalStyle";
 
 export default function Charts({ countryName }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -87,7 +86,6 @@ export default function Charts({ countryName }) {
       let history = await api.get(
         config.urls.historyByParticularCountry(countryName)
       );
-      console.log(history.data.stat_by_country);
       setCountryHistory(history.data.stat_by_country);
     }
     getCountryHistory();
