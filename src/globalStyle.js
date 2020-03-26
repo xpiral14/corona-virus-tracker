@@ -10,7 +10,6 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
    background: #fff;
-   overflow-y: hidden;
   }
   h2{
    font-family: "Nunito", Arial

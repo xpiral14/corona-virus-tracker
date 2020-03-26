@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { primary, textColor } from "../../../../globalStyle";
+import { textColor } from "../../../../globalStyle";
 export const Container = styled.div``;
 
 export const OverView = styled.div`
