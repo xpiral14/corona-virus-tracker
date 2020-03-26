@@ -6,12 +6,12 @@ import {
   TableContainer,
   CountryChartContainer,
   FindCountry,
-  LoadingContainer,
-  ChartBox
+  LoadingContainer
 } from "./style";
 import { BarLoader } from "react-spinners";
 import Charts from "./components/Charts";
 import api from "../../config/api";
+import Header from "../../components/Header";
 export default function CountryState() {
   const [columnNames, setColumnNames] = useState(null);
   const [allColumnData, setAllColumnData] = useState(null);
@@ -77,6 +77,7 @@ export default function CountryState() {
   }
   return (
     <>
+      <Header />
       <Container>
         {!columnData ? (
           <LoadingContainer>
