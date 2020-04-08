@@ -8,7 +8,7 @@ import {
   Presentation,
   GraphContainer,
   GraphBox,
-  Title
+  Title,
 } from "./style";
 import api from "../../../../config/api";
 import config from "../../../../config";
@@ -30,7 +30,7 @@ export default function Charts({ countryName }) {
     async function getLastestState() {
       setIsLoading(true);
       let {
-        data: { latest_stat_by_country: latestStateByCountry }
+        data: { latest_stat_by_country: latestStateByCountry },
       } = await api.get(config.urls.latestStateByCountry(countryName));
 
       latestStateByCountry = latestStateByCountry[0];
@@ -39,38 +39,40 @@ export default function Charts({ countryName }) {
       );
 
       let totalCasesInCountry = parseInt(
-        latestStateByCountry.total_cases.replace(",", "")
+        latestStateByCountry.total_cases.replace(/,/g, "")
       );
       let totalCasesInWorld = parseInt(
-        worldLatestState.total_cases.replace(",", "")
+        worldLatestState.total_cases.replace(/,/g, "")
       );
       let totalRecoveredInCountry = parseInt(
-        latestStateByCountry.total_recovered.replace(",", "")
+        latestStateByCountry.total_recovered.replace(/,/g, "")
       );
       let totalRecoveredInWorld = parseInt(
-        worldLatestState.total_recovered.replace(",", "")
+        worldLatestState.total_recovered.replace(/,/g, "")
       );
       let totalFatalInCountry = parseInt(
-        latestStateByCountry.total_deaths.replace(",", "")
+        latestStateByCountry.total_deaths.replace(/,/g, "")
       );
       let totalFatalInWorld = parseInt(
-        worldLatestState.total_deaths.replace(",", "")
+        worldLatestState.total_deaths.replace(/,/g, "")
       );
+      console.log("totalCasesInCountry", totalCasesInCountry);
+      console.log("totalCasesInWorld", totalCasesInWorld);
       let overviewInfos = [
         {
           legend: "dos Infectados",
           percent: percent(totalCasesInCountry, totalCasesInWorld),
-          bg: "#FF6961"
+          bg: "#FF6961",
         },
         {
           legend: "dos casos fatais",
           percent: percent(totalFatalInCountry, totalFatalInWorld),
-          bg: "#FF6961"
+          bg: "#FF6961",
         },
         {
           legend: "dos Curados",
           percent: percent(totalRecoveredInCountry, totalRecoveredInWorld),
-          bg: "#77DD77"
+          bg: "#77DD77",
         },
       ];
       setCountryLatestState(latestStateByCountry);
@@ -104,8 +106,8 @@ export default function Charts({ countryName }) {
         "Total recuperados": toNumber(d.total_recovered),
         "Casos confirmados": toNumber(d.new_cases),
         Data: format(new Date(d.record_date), "dd 'de' MMMM 'ás' hh:mm", {
-          locale: pt
-        })
+          locale: pt,
+        }),
       }));
       return formatedData;
     }
@@ -123,8 +125,8 @@ export default function Charts({ countryName }) {
           </Presentation>
 
           <OverView>
-            {overviewInfo.map(overview => (
-              <PercentBox key={overview.legend} bg = {overview.bg}>
+            {overviewInfo.map((overview) => (
+              <PercentBox key={overview.legend} bg={overview.bg}>
                 <Percent>{overview.percent}%</Percent>
                 <PercentText>{overview.legend}</PercentText>
               </PercentBox>
