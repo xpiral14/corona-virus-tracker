@@ -5,14 +5,14 @@ const config = {
   },
   urls: {
     affectedCountries:
-      "https://coronavirus-monitor.p.rapidapi.com/coronavirus/affected.php",
+      "/coronavirus/affected.php",
     historyByParticularCountry: country =>
-      `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php?country=${country}`,
-    casesByCountry: `https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php`,
+      `/coronavirus/cases_by_particular_country.php?country=${country}`,
+    casesByCountry: `/coronavirus/cases_by_country.php`,
     latestStateByCountry: country =>
-      `https://coronavirus-monitor.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country=${country}`,
+      `/coronavirus/latest_stat_by_country.php?country=${country}`,
     worldTotalState:
-      "https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php"
+      "/coronavirus/worldstat.php"
   }
 };
 
