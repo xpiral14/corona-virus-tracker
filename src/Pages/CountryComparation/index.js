@@ -54,6 +54,7 @@ export default function CountryComparation() {
     async function getData() {
       const response = await api.get(config.urls.affectedCountries);
       let { affected_countries: affectedCountries } = response.data;
+      affectedCountries = affectedCountries.slice(1)
       setAllCountries(affectedCountries);
       setCountries(affectedCountries);
     }

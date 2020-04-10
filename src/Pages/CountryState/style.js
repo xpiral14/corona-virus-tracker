@@ -7,6 +7,10 @@ export const Container = styled.div`
   grid-template-columns: 0.5fr 0.5fr;
   grid-row-gap: 20px;
   grid-column-gap: 20px;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const CountryChartContainer = styled.div`
@@ -24,19 +28,42 @@ export const TableContainer = styled.div`
   max-height: 100vh;
   overflow-y: scroll;
   &::-webkit-scrollbar {
-   width: 7px;
+    width: 7px;
   }
-  &::-webkit-scrollbar-thumb{
-    background:${textColor};
+  &::-webkit-scrollbar-thumb {
+    background: ${textColor};
     border-radius: 5px;
   }
   flex: 1;
   margin-top: 20px;
   margin-left: 20px;
+  @media screen and (max-width: 768px) {
+    padding: 2rem;
+    /* width: 100%; */
+    max-width: 100vw;
+    overflow-x: scroll;
+
+    table {
+      thead {
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6) {
+          display: none;
+        }
+      }
+      tbody {
+        td:nth-child(4),
+        td:nth-child(5),
+        td:nth-child(6) {
+          display: none;
+        }
+      }
+    }
+  }
 `;
 
 export const ChartContainer = styled.div`
-margin-top: 20px;
+  margin-top: 20px;
   max-width: 300px;
   box-shadow: 0 7px 7px #0002;
   padding: 15px;
@@ -60,13 +87,13 @@ export const FindCountry = styled.div`
   }
   input {
     flex: 0.7;
-    border: 1px solid #F4F7FC;
+    border: 1px solid #f4f7fc;
     border-radius: 5px 0 0 5px;
   }
   button {
     cursor: pointer;
-    color: #2E3B52;
-    background: #F4F7FC;
+    color: #2e3b52;
+    background: #f4f7fc;
     border: none;
     font-weight: bold;
     border-radius: 0 5px 5px 0;
@@ -80,5 +107,4 @@ export const FindCountry = styled.div`
 export const ChartBox = styled.div`
   display: flex;
   flex: 1;
-
-`
+`;

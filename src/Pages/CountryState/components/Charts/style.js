@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { textColor } from "../../../../globalStyle";
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const OverView = styled.div`
   display: flex;
@@ -17,6 +20,10 @@ export const OverView = styled.div`
   &::-webkit-scrollbar {
     width: 7px;
   }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 export const Presentation = styled.div`
   h2 {
@@ -29,6 +36,7 @@ export const Presentation = styled.div`
     font-weight: 200;
     margin-top: 10px;
   }
+ 
 `;
 export const PercentBox = styled.div`
   margin-top: 20px;
@@ -40,7 +48,7 @@ export const PercentBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  border: 2px solid ${p => p.bg};
+  border: 2px solid ${(p) => p.bg};
   text-align: center;
 `;
 
@@ -57,6 +65,10 @@ export const GraphContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const GraphBox = styled.div`
@@ -67,6 +79,11 @@ export const GraphBox = styled.div`
   width: 30%;
   height: 100px;
   /* box-shadow: 0 5px 7px #21212110; */
+  @media screen  and (max-width:768px){
+  height: 200px;
+    
+  width: 100%;
+  }
 `;
 
 export const Title = styled.div`

@@ -42,6 +42,7 @@ export default function CountryState() {
           (column, index) => !ignoresColumns.includes(index)
         )
       );
+      importantColumns = importantColumns.slice(1)
       setAllColumnData(importantColumns);
       setColumnData(importantColumns);
     }

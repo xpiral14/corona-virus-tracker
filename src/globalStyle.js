@@ -5,19 +5,19 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: "Nunito";
+    font-family: "Poppins";
     outline: 0;
   }
   body {
    background: #fff;
   }
   h2{
-   font-family: "Nunito", Arial
+   font-family: "Poppins", Arial
 
   }
   .recharts-cartesian-axis-tick {    
     font-size: 12px;
-    font-family: "Nunito", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 `
 
