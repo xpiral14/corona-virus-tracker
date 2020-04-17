@@ -3,24 +3,23 @@ import GlobalStyle from "./globalStyle";
 import CountryState from "./Pages/CountryState";
 import Title from "./components/Title";
 import Menu from "./components/Menu";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import CountryComparation from "./Pages/CountryComparation";
+import history from "./config/history";
+import CountryInfo from "./Pages/CountryInfo";
 
 function App() {
   return (
-      <Router>
-        <GlobalStyle />
-        <Title />
-        <Menu />
-        <Switch>
-          <Route path="/" exact>
-            <CountryState />
-          </Route>
-          <Route path="/comparacao">
-            <CountryComparation />
-          </Route>
-        </Switch>
-      </Router>
+    <Router history={history}>
+      <GlobalStyle />
+      <Title />
+      <Menu />
+      <Switch>
+        <Route path="/" exact component={CountryState} />
+        <Route path="/info/:country" exact component={CountryInfo} />
+        <Route path="/comparacao" component={CountryComparation} />
+      </Switch>
+    </Router>
   );
 }
 

@@ -3,14 +3,7 @@ import { darken } from "polished";
 import { textColor } from "../../globalStyle";
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  grid-row-gap: 20px;
-  grid-column-gap: 20px;
-
-  @media screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+  
 `;
 
 export const CountryChartContainer = styled.div`
@@ -36,9 +29,8 @@ export const TableContainer = styled.div`
   }
   flex: 1;
   margin-top: 20px;
-  margin-left: 20px;
   @media screen and (max-width: 768px) {
-    padding: 2rem;
+    /* margin-left: 50px; */
     /* width: 100%; */
     max-width: 100vw;
     overflow-x: scroll;
