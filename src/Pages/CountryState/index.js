@@ -19,7 +19,7 @@ export default function CountryState() {
 
   useEffect(() => {
     // let ignoresColumns = [3, 5, 6, 9];
-    let ignoresColumns = [];
+    let ignoresColumns = [3];
     async function getData() {
       let columnNames = {
         country_name: "Nome do país",
