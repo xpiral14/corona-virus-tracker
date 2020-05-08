@@ -95,12 +95,14 @@ export default function CountryComparation() {
       );
       let firstCountryHistory = countryHistories[0];
       let countryName;
-
+     
+      
       // para cada história de um país encontrado, prepara os dados de maneira que a biblioteca de gráficos entenda.
       for (let i = 1; i < countryHistories.length; i++) {
         // para cada objeto de uma parte de uma história, adiciona o valor de "Total de casos" em um atributo com o nome do país.
         for (let j = 0; j < firstCountryHistory.length; j++) {
           // pega o nome do país do objeto atual.
+          
           countryName = Object.keys(countryHistories[i][j])[1];
           firstCountryHistory[j] = {
             ...firstCountryHistory[j],
