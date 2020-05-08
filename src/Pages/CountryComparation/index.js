@@ -88,10 +88,10 @@ export default function CountryComparation() {
               locale: pt
             }),
             [data.country_name]: Number.parseInt(
-              data.total_cases.replace(",", "")
+              data.total_cases.replace(/,/g, "")
             )
           };
-        })
+        }).reverse()
       );
       let firstCountryHistory = countryHistories[0];
       let countryName;
