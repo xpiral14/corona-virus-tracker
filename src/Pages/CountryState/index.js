@@ -38,7 +38,6 @@ export default function CountryState() {
       };
       let response = await api.get(config.urls.casesByCountry);
       let { data } = response;
-
       setColumnNames(
         Object.keys(data.countries_stat[0])
           .filter((columName, index) => !ignoresColumns.includes(index))
