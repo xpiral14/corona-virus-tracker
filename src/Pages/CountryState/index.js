@@ -38,7 +38,7 @@ export default function CountryState() {
       };
       let response = await api.get(config.urls.casesByCountry);
       let { data } = response;
-      console.log(data.countries_stat[1]);
+
       setColumnNames(
         Object.keys(data.countries_stat[0])
           .filter((columName, index) => !ignoresColumns.includes(index))
@@ -49,7 +49,6 @@ export default function CountryState() {
           (column, index) => !ignoresColumns.includes(index)
         )
       );
-      importantColumns = importantColumns.slice(1);
       setAllColumnData(importantColumns);
       setColumnData(importantColumns);
     }
